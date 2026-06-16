@@ -71,13 +71,45 @@ es_costero <- c(TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE,
 length(comunas) # cantidad o número de elementos que tiene un vector 
 
 # Suma y estadísticas
+# se realizan dentro del vector 
 sum(superficies_km2)
 max(superficies_km2)
 mean(superficies_km2)
 median(superficies_km2)
 
+# --------------------------------------------
+# Ordenar
+# En R, sort() y order() tienen propuestos completamente diferentes:
+
+# sort() Ordenar directamente los datos del vectro 
+
+# order() Los índices que permitirían ordenar el vector - Devolver la permutación de posiciones 
+# da en qué posición estaban originalmente los valores ordenados
+
+sort(superficies_km2) # ascendente
+sort(superficies_km2, decreasing = TRUE) # descendente
+
+# Índice del orden
+order(superficies_km2)
+
+# --------------------------------------------
+# Acceso a elementos
+# En R, el acceso a elementos se realiza principalmente con el operador de corchetes [].
+
+# Acceso por posición (R indexa desde 1)
+superficies_km2[1] # primera comunas
+superficies_km2[c(1,3)] # primera y tercera
+superficies_km2[1:5] # primeras cinco
 
 
+#  | Operador | Uso                                                | Devuelve                                                    |
+#  | -------- | -------------------------------------------------- | ----------------------------------------------------------- |
+#  | []       | Subconjuntos de vectores, matrices, data frames    | Objeto de la misma clase que el original rsanchezs.gitbooks |
+#  | [[ ]]    | Extraer elementos de listas o data frames          | Solo un elemento, clase puede cambiar rsanchezs.gitbooks    |
+#  | $        | Extraer elementos de listas/data frames por nombre | Similar to [[ ]] rsanchezs.gitbooks                         |
+
+# Acceso con condición lógica
+superficies_km2[superficies_km2 > 10]
 
 
 
