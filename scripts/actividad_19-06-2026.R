@@ -473,16 +473,31 @@ class(datos_ny)
 # accediendo a las listas dentro de la lista "meta" y "data"
 
 datos_ny_raw$meta
+# Ver estructura de meta
+str(datos_ny_raw$meta)
+
 datos_ny_raw$data
 
+# Acceder a la primera lista anidada
+datos_ny_raw$rows  # o datos_ny_raw[["rows"]]
 
 
 
+# Convertir a Data Frame para análisis:
+# para esto es necesario haber importado la librearía con la función de "jsonlite" 
+# Método 1: Convertir data a data frame
+datos_ny_df <- as.data.frame(datos_ny$data)
 
+# Método 2: Si data es una lista de vectores/records
+datos_ny_df <- data.frame(datos_ny$data, row.names = NULL)
 
+# Ver estructura
+str(datos_ny_df)
+head(datos_ny_df)
 
-
-
+# Ver columnas
+names(datos_ny_df)
+ 
 
 
 
