@@ -214,6 +214,9 @@ barrio_palermo <- list(nombre = "Palermo",
 # Ver estructura completa
 str(barrio_palermo)
 
+# La función str() en R significa "estructura" (structure) y es una función del core de R
+# se usa para mostrar de forma compacta y legible la estructura interna de cualquier objeto
+
 # Acceso a elementos de una lista 
 
 # Por nombre con $
@@ -264,6 +267,225 @@ str(barrios_ba)
 #  | Importación    | ST_GeomFromGeoJSON(json) | fromJSON(archivo)                 |
 #  | Transformación | Funciones SQL espaciales | Manipulación de listas            |
 #  | Visualización  | QGIS, pgAdmin            | leaflet, ggplot2, sf              |
+
+
+# ========================================
+# Tuplas 
+# ========================================
+
+# Una tupla es una agrupación ordenada de elementos que pueden contener diferentes tipos de variables.
+# Una tupla no puede modificarse una vez que se define
+# R no tiene un tipo nativo “tupla” como Python, pero podemos simularlas con vectores nombrados, que son inmutables por diseño de lenguaje
+
+# Coordenadas de la Plaza de Mayo (latitud, longitud)
+plaza_mayo <- c(lat = -34.6083, lon = -58.3712)
+plaza_mayo
+
+plaza_mayo["lat"]
+plaza_mayo["lon"]
+
+# Información de la ciudad
+info_caba <- c(
+  nombre = "Ciudad Autónoma de Buenos Aires",
+  pais = "Argentina",
+  fundacion = "1580")
+
+info_caba["nombre"]
+
+# ========================================
+# DataFrames o Marco de Datos 
+# ========================================
+
+# El DataFrame es la estructura central para el análisis de datos en R: una tabla con filas
+# (observaciones) y columnas (variables), donde cada columna puede ser de un tipo diferente. Es
+# equivalente a una hoja de cálculo o a una tabla de base de datos.
+
+#  Construir un marco de datos 
+
+# DataFrame con datos de comunas de CABA
+comunas_df <- data.frame(
+  id_comuna = 1:5,
+  nombre = c("Commune 1", "Commune 2", "Commune 3", "Commune 4", "Commune 5"),
+  superficie = c(5.27, 2.76, 6.31, 9.17, 6.85),
+  poblacion = c(205886, 157932, 187537, 218245, 179005),
+  es_costero = c(TRUE, FALSE, FALSE, TRUE, FALSE)
+  )
+
+str(comunas_df)
+
+# Resumen estadístico
+summary(comunas_df)
+
+# Dimensiones
+nrow(comunas_df) # número de filas
+ncol(comunas_df) # número de columnas
+dim(comunas_df) # ambas dimensiones
+
+# Nombres de columnas
+colnames(comunas_df)
+
+#  Acceso y manipulación 
+
+# Acceso por columna
+comunas_df$nombre
+comunas_df[["poblacion"]]
+
+# Acceso por fila y columna [fila, columna]
+comunas_df[1, ] # primera fila completa
+comunas_df[, "nombre"] # columna "nombre"
+comunas_df[2, "superficie"]
+
+# Filtrado condicional
+comunas_df[comunas_df$es_costero == TRUE, ]
+comunas_df[comunas_df$poblacion > 190000, ]
+
+# Agregar columnas con la función cbind() 
+
+# Calcular densidad poblacional
+densidad <- comunas_df$poblacion / comunas_df$superficie
+print(densidad)
+
+
+comunas_df <- cbind(comunas_df, densidad_hab_km2 = densidad)
+
+head(comunas_df)
+
+# La función head() en R permite imprimir en consola el inicio de un objeto de datos (como un data frame, matriz o vector).
+# por defecto muestra 6 registros
+
+
+#  Importación de datos o dataset 
+
+#  Tipo de dataset "CSV"
+
+# El paquete readr (parte del tidyverse) ofrece funciones rápidas y robustas para leer archivos de texto delimitado
+
+
+# descarga del dataset: 
+# https://data.buenosaires.gob.ar/dataset/barrios/resource/7ac3ebfa-2f32-41d4-ae39-ae6f5ba15070
+
+# Instalar y cargar readr (si no está instalado)
+
+# install.packages("readr")
+
+library(readr)
+
+# Acceder al dataset en el dirctorio 
+
+getwd() # esta función nos brinda la posibilidad de acceder a la ubicación de nuestro proyecto 
+
+file.choose() # podemos localizar el archivo o dataset y nos devuelve el path del mismo 
+
+path_datos <- "" # dentro almacenamos el path como variable y la podemos reutilizar 
+
+#  podemos utilizar la ruta relativa de "datos/"barrios_comunas_p_Ciencia_de_Datos_y_PP.csv"
+
+#  Importar CSV local
+barrios <- read_csv("datos/barrios_comunas_p_Ciencia_de_Datos_y_PP.csv")
+
+# Al utilizar read_csv es un paquete que lee primero la estructura del archivo CSV 
+
+#  si se desea utilizar la función de base, sin traer la librería, entonces se necesita especificar
+barrios_base <- read.csv("datos/barrios_comunas_p_Ciencia_de_Datos_y_PP.csv", sep = ",", encoding = "UTF-8", stringsAsFactors = FALSE)
+
+# Diferencia clave: readr::read_csv() es más rápida, infiere mejor los tipos de
+# columnas y no convierte strings a factores por defecto.
+
+
+str(barrios)
+View(barrios)
+
+length(barrios)
+ncol(barrios)
+nrow(barrios)
+colnames(barrios)
+names(barrios)
+rownames(barrios)
+
+# ---------------------
+# crear un vector de nombres de barrios CABA 
+
+barrios$nombre
+barrios$comuna
+
+#  extraer un vector de un marco de datos 
+nombre_barrios <- barrios$nombre
+print(nombre_barrios)
+
+
+#  Acceder al dataset desde una URL 
+# R puede leer datos directamente desde internet usando una URL como si fuera un archivo local.
+
+# https://raw.githubusercontent.com/eparker12/nCoV_tracker/master/input_data/coronavirus_today.csv
+
+#  URL del dataset de COVID-19 (GitHub)
+#  creamos una variable para almacenar la variable URL 
+
+url_covid <- paste0(
+  "https://raw.githubusercontent.com/eparker12/nCoV_tracker/",
+  "master/input_data/coronavirus.csv")
+
+print(url_covid)
+
+#  importamos el dataset 
+covid_data <- read.csv(url(url_covid))
+
+# Explorar
+str(covid_data)
+head(covid_data)
+head(covid_data[, 1:6])
+
+dim(covid_data) #  dimensiones 
+
+#  Importar un dataset JSON 
+
+# El formato JSON es muy común en APIs y datos web. Dos paquetes populares: rjson y jsonlite.
+
+# Instalar paquetes
+# install.packages("rjson")
+# install.packages("jsonlite")
+
+
+# --- Con rjson ---
+
+library(rjson)
+
+url_ny <- "https://data.ny.gov/api/views/9a8c-vfzj/rows.json"
+
+datos_ny_raw <- fromJSON(file = url_ny)
+
+# Los datos JSON suelen venir en listas anidadas
+class(datos_ny_raw)
+
+names(datos_ny_raw)
+
+str(datos_ny_raw)
+
+# sabemos que hay una lista que tiene dos listas anidadas
+
+# --- Con jsonlite (más conveniente para APIs) ---
+library(jsonlite)
+
+datos_ny <- fromJSON(url_ny) # jsonlite intenta convertir automáticamente a data.frame
+str(datos_ny)
+class(datos_ny)
+
+# accediendo a las listas dentro de la lista "meta" y "data"
+
+datos_ny_raw$meta
+datos_ny_raw$data
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
