@@ -112,5 +112,77 @@ superficies_km2[1:5] # primeras cinco
 superficies_km2[superficies_km2 > 10]
 
 
+# ========================================
+# Matrices 
+# ========================================
+
+#´ Definición de matrices en R
+#'
+#' En R, una matriz es una colección de elementos del mismo tipo de datos 'numéricos, caracteres o lógicos'
+#' dispuestos en un número fijo de filas y columnas. Es una estructura bidimensional (solo filas y columnas).
+#' 
+#' Argumentos de la función matrix():
+
+matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)
+
+# Crear una matriz de datos de población por grupo etario (inventado)
+datos_poblacion <- matrix(
+  data = c(120000, 115000, 98000, 87000,
+           200000, 195000, 180000, 170000,
+           150000, 145000, 130000, 120000),
+  nrow = 3,
+  ncol = 4,
+  byrow = TRUE)
+
+print(datos_poblacion)
+
+# Asignar nombres a filas y columnas
+
+#  Nombre de los registros por grupo etario 
+rownames(datos_poblacion) <- c("0-17 años", "18-64 años", "65+ años")
+
+#  nombre de las columnas por zona
+colnames(datos_poblacion) <- c("Norte", "Sur", "Este", "Oeste")
+
+print(datos_poblacion)
+
+# --------------------------------------
+#  Operaciones con matrices 
+
+# Dimensiones
+nrow(datos_poblacion) #  número de registros
+ncol(datos_poblacion) #  número de columnas
+dim(datos_poblacion) #  dimensiones de la matriz 
+
+# Medias por fila y columna
+rowMeans(datos_poblacion) # promedio por grupo etario
+colMeans(datos_poblacion) # promedio por zona
+
+# Sumas
+rowSums(datos_poblacion) # total por grupo etario
+colSums(datos_poblacion) # total por zona
+
+# Acceso a elementos: [fila, columna]
+datos_poblacion[1, 2] # fila 1, columna 2
+datos_poblacion[, 1] # toda la columna 1 (zona Norte)
+datos_poblacion[2, ] # toda la fila 2 (18-64 años)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
