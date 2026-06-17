@@ -146,6 +146,11 @@ colnames(datos_poblacion) <- c("Norte", "Sur", "Este", "Oeste")
 
 print(datos_poblacion)
 
+# Ver los nombres de filas
+rownames(datos_poblacion)
+# Ver los nombres de columnas
+colnames(datos_poblacion)
+
 # --------------------------------------
 #  Operaciones con matrices 
 
@@ -162,26 +167,103 @@ colMeans(datos_poblacion) # promedio por zona
 rowSums(datos_poblacion) # total por grupo etario
 colSums(datos_poblacion) # total por zona
 
-# Acceso a elementos: [fila, columna]
+# sumar todo el contenido de la matriz
+sum(datos_poblacion)
+
+# promedio de población por zonas
+colMeans(datos_poblacion)
+
+# Acceso a elementos mediante [fila, columna]
 datos_poblacion[1, 2] # fila 1, columna 2
 datos_poblacion[, 1] # toda la columna 1 (zona Norte)
 datos_poblacion[2, ] # toda la fila 2 (18-64 años)
 
+# Acceso a elementos mediante el nombre
+datos_poblacion[c("0-17 años", "18-64 años"), ]
+# también es posible utilizar la posición numérica 
+datos_poblacion[c(1, 2), ]
+
+# Filas y columnas específicas, es un recorte de la matriz
+datos_poblacion[c("0-17 años", "18-64 años"), c("Norte", "Sur")]
+
+# si deseamos trasponer la matriz lo podemos realizar con la función t() 
+t(datos_poblacion)
 
 
+# ========================================
+# Listas 
+# ========================================
+
+#' En R, una lista es un contenedor de objetos que pueden ser de cualquier clase, 
+#' como vectores, matrices, arrays, funciones, data frames e incluso otras listas. 
+#' Es una estructura de datos unidimensional que permite almacenar 
+#' elementos de distintos tipos y dimensiones.
+#'
 
 
+# Crear una lista con información de un barrio
+
+barrio_palermo <- list(nombre = "Palermo",
+                       comuna = 14,
+                       superficie = 15.98,
+                       poblacion = 234184,
+                       es_costero = FALSE,
+                       limites = c("Belgrano", "Recoleta", "Villa Crespo", "Chacarita")
+                       ) 
+
+# Ver estructura completa
+str(barrio_palermo)
+
+# Acceso a elementos de una lista 
+
+# Por nombre con $
+barrio_palermo$nombre
+barrio_palermo$poblacion
+
+# Por índice con [[]]
+barrio_palermo[[1]] # primer elemento
+barrio_palermo[[4]] # cuarto elemento
+
+#  acceder por nombres
+barrio_palermo$nombre          # "Palermo"
+barrio_palermo$comuna          # 14
+barrio_palermo$superficie      # 15.98
+barrio_palermo$limites         # c("Belgrano", "Recoleta", "Villa Crespo", "Chacarita")
+
+# Acceder a elementos dentro de un elemento (vector):
+barrio_palermo$limites[1]      # "Belgrano" (primer límite)
+barrio_palermo$limites[2:4]    # c("Recoleta", "Villa Crespo", "Chacarita")
+barrio_palermo$limites[3]      # "Villa Crespo"
 
 
+# Modificar un elemento de la lista
+barrio_palermo$poblacion <- 235000
 
+# Crear lista con otro barrio
+barrio_recoleta <- list(nombre = "Recoleta",
+                        comuna = 14,
+                        superficie = 4.6,
+                        poblacion = 171155,
+                        es_costero = FALSE,
+                        limites = c("Palermo", "Belgrano", "Caballito"))
 
+# Crear lista de barrios (lista recursiva)
+barrios_ba <- list(barrio_palermo, barrio_recoleta)
+# Ver estructura completa
+str(barrios_ba)
 
+# ---------------------------------------------------------
 
+# muy importante: 
+# Existe una relación directa y fundamental entre las listas en R y los archivos JSON/GeoJSON: 
+# las listas en R son la representación natural de JSON en el ambiente de trabajo.
 
-
-
-
-
+#  | Tarea          | PostgreSQL/PostGIS       | R (con listas)                    |
+#  | -------------- | ------------------------ | --------------------------------- |
+#  | Serialización  | ST_GeoJSON(geometry)     | geojson_out(lista) rdocumentation |
+#  | Importación    | ST_GeomFromGeoJSON(json) | fromJSON(archivo)                 |
+#  | Transformación | Funciones SQL espaciales | Manipulación de listas            |
+#  | Visualización  | QGIS, pgAdmin            | leaflet, ggplot2, sf              |
 
 
 
