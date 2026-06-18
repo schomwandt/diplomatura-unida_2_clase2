@@ -3,7 +3,7 @@ title: "Clase 2 — Introducción al manejo de R con RStudio"
 subtitle: "Diplomatura en Análisis Exploratorio de Datos Espaciales aplicados a las Ciencias Sociales"
 author:
   - name: Dr. David Schomwandt
-  - name: Nora Lucioni
+  - name: Dra. Nora Lucioni
 institute: "Universidad de Buenos Aires (UBA)"
 date: "2026-06-19"
 lang: es
