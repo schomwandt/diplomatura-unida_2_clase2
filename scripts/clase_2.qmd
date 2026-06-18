@@ -8,30 +8,11 @@ institute: "Universidad de Buenos Aires (UBA)"
 date: "2026-06-19"
 lang: es
 format:
-  pdf:
-    documentclass: article
-    papersize: a4
-    fontsize: 11pt
-    geometry:
-      - top=2.5cm
-      - bottom=2.5cm
-      - left=2.5cm
-      - right=2.5cm
+  docx:
     toc: true
     toc-title: "Contenidos"
     number-sections: true
-    colorlinks: true
     highlight-style: tango
-    include-in-header:
-      text: |
-        \usepackage{fancyhdr}
-        \usepackage{graphicx}
-        \pagestyle{fancy}
-        \fancyhf{}
-        \fancyhead[L]{\small Diplomatura EDEA — UBA}
-        \fancyhead[R]{\includegraphics[height=0.8cm]{../assets/getig_logo.jpg}}
-        \fancyfoot[C]{\thepage}
-        \renewcommand{\headrulewidth}{0.4pt}
 execute:
   echo: true
   eval: false
